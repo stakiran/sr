@@ -55,7 +55,8 @@ soundrecorder /FILE 170808_134833_5s.wav /DURATION 0000:00:05
 ```
 
 ## Requirement
-- Windows 7+
+- Windows 7
+  - Not working on Windows 10 bacause soundrecorder.exe does not exist.
 - Python 2.7
 - A Mic device for recording.
 
