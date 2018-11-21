@@ -6,6 +6,7 @@ import subprocess
 class execlib:
     @staticmethod
     def get_stdout(cmdline):
+        """ @return A byte string, so maybe need to decode with .decode('cp932')"""
         return subprocess.check_output(cmdline, shell=True)
 
     @staticmethod
@@ -85,7 +86,9 @@ if args.here:
 if args.ps:
     commandline = "WMIC PROCESS WHERE \"Name LIKE '%soundrecorder%'\" GET CREATIONDATE,CAPTION /FORMAT:LIST"
     stdout_raw = execlib.get_stdout(commandline)
-    stdout_lines = stdout_raw.split('\r\n')
+    # cmd 前提なので文字コードも固定
+    stdout_str = stdout_raw.decode('cp932')
+    stdout_lines = stdout_str.split('\r\n')
     stdout_lines = [line for line in stdout_lines if len(line.strip())!=0]
     if stdout_lines:
         # Before: ['Caption=SoundRecorder.exe\r\r', 'CreationDate=20170221144301.365129+540\r\r', ...]
@@ -93,7 +96,7 @@ if args.ps:
         for i in range(len(stdout_lines)):
             line = stdout_lines[i]
             if i%2!=0:
-                print 'from %s_%s' % (line.split('=')[1][:8], line.split('=')[1][8:8+6])
+                print('from {}_{}'.format(line.split('=')[1][:8], line.split('=')[1][8:8+6]))
     exit(0)
 
 # fix filename
@@ -167,5 +170,5 @@ if not(args.test):
     err = execlib.nonblocking_exec(commandline)
     exit(err)
 else:
-    print commandline
+    print(commandline)
     exit(0)
