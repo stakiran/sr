@@ -156,15 +156,6 @@ recordee_name += ext
 # execute
 # -------
 
-# @todo progress mode.
-#   0000:00:00 0000:00:30 30
-#   0000:00:01 0000:00:30 29
-#   ....
-#   いや違う, 現プロセス起動時間から「あと何分で使えるか」を表示しよう.
-#   ...いやダメだ. wmic からは起動時のパラメータまでわからん...
-#
-# @todo print curdir information?
-
 commandline = 'soundrecorder /FILE %s /DURATION %s' % (recordee_name, timestr)
 if not(args.test):
     err = execlib.nonblocking_exec(commandline)
